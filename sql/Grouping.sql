@@ -49,3 +49,22 @@ ORDER BY
 -- wtorek,2463
 -- niedziela,2320
 -- sobota,2311
+
+-- Rozwi¹zanie 
+SELECT 
+	top(3) DATENAME(WEEKDAY, rental_date) as rental_day,
+	count(*) as count
+FROM rental
+	GROUP BY DATENAME(WEEKDAY, rental_date)
+	ORDER BY count DESC			
+	
+-- Rozwi¹zanie z u¿yciem podzapytania
+SELECT 
+	TOP(3) rental_day, 
+	COUNT(*) as [count] 
+	FROM
+	(
+		SELECT DATENAME(WEEKDAY, [rental_date]) as rental_day FROM [dbo].[rental] 
+	) AS [Weekdays]
+GROUP BY rental_day
+ORDER BY [count] desc
