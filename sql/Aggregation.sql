@@ -47,4 +47,22 @@ SELECT COUNT(*) FROM rental WHERE return_date IS NULL
 
 -- Ile jest filmów w kategorii PG, PG-13 i czas wypo¿yczenia do 3 dni (rental_duration)?
 
+-- AND (iloczyn logiczny) 
+-- OR (suma logiczna) 
+-- a AND (b OR c)
+-- a * (b + c)
 
+SELECT DISTINCT rating FROM film
+
+SELECT 
+	[rental_duration], 
+	[rating] 
+FROM 
+	[FILM] 
+WHERE 
+	[rental_duration] <= 3 
+	AND ([rating]  = 'PG-13' OR [rating]  = 'PG')
+
+SELECT COUNT(*) FROM film WHERE rating LIKE 'PG%' AND rental_duration <= 3
+
+SELECT COUNT(*) FROM [dbo].[film] WHERE [rental_duration] < 4 AND [rating] IN ('PG','PG-13')
