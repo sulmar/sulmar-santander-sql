@@ -58,3 +58,19 @@ SELECT
 	first_name + ' ' + last_name AS full_name 
 FROM 
 	customer
+
+-- Funkcje tekstowe
+SELECT 
+	first_name,
+	LOWER(first_name) AS normalized_first_name,
+	email,
+	UPPER(email) AS normalized_email,
+	LEFT(first_name, 3) AS prefix_first_name,
+	RIGHT(last_name, 3) AS suffix_last_name,
+	SUBSTRING(first_name, 3, 2) AS fragment_first_name,
+	CHARINDEX('.', email) AS email_dot_index,
+	LEN(email) as email_length
+FROM 
+	customer
+
+
