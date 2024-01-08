@@ -69,8 +69,17 @@ SELECT
 	RIGHT(last_name, 3) AS suffix_last_name,
 	SUBSTRING(first_name, 3, 2) AS fragment_first_name,
 	CHARINDEX('.', email) AS email_dot_index,
-	LEN(email) as email_length
+	LEN(email) as email_length,
+	CONCAT(first_name, ' ', last_name) AS full_name
 FROM 
 	customer
 
+-- Rozwi¹zanie zadania
+SELECT
+    CONCAT(LEFT([first_name],1), RIGHT(LOWER([first_name]), LEN([first_name]) - 1)) as [capitalized_first_name], 
+    CONCAT(LEFT([last_name],1), RIGHT(LOWER([last_name]), LEN([last_name]) - 1)) as [capitalized_last_name],
+    LOWER([email]) as [email_normalized],
+    SUBSTRING([email], (CHARINDEX('@', [email]) + 1), LEN([email])) AS [domain]
+FROM 
+	customer	
 
