@@ -83,3 +83,32 @@ SELECT
 FROM 
 	customer	
 
+-- Funkcje datowe
+SET LANGUAGE Polish
+
+SELECT 
+	payment_date,
+	YEAR(payment_date) as [payment_year],
+	MONTH(payment_date) as [payment_month],
+	DAY(payment_date) as [payment_day],
+	DATEPART(WEEKDAY, payment_date) as [payment_weekday],
+	DATENAME(WEEKDAY, payment_date) as [payment_weekname],
+	FORMAT(payment_date, 'dd-MMMM-yyyy HH:mm', 'pl-PL') as [payment_date_pl]
+FROM 
+	payment
+
+-- Funkcja ODBC Scalar Functions
+	DECLARE @date datetime2 = '2018-07-01';
+		SELECT {fn MONTHNAME(@date)} AS Result;
+
+SELECT 
+	rental_date,
+	return_date,
+	DATEDIFF(DAY, rental_date, return_date) AS days_rented,
+	DATEADD(DAY, 14, rental_date) AS due_date
+FROM rental
+
+
+
+
+
