@@ -20,3 +20,5 @@ SELECT * FROM film WHERE replacement_cost BETWEEN 10 AND 20
 
 -- Filtrowanie rekordów na podstawie fragmentu tekstu
 SELECT * FROM customer WHERE first_name LIKE 'AL%'
+
+-- % - oznacza dowolny tekst
