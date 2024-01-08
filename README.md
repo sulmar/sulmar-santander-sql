@@ -16,14 +16,13 @@ git clone https://github.com/sulmar/sulmar-santander-sql
 3. Utwórz bazę danych
 
 ```bash
-sqlcmd -S localhost -d master -E -i sql-server-sakila-schema.sql
+sqlcmd -S (localdb)\MSSQLLocalDB -d master -E -i sql-server-sakila-schema.sql
 ```
 
 4. Załadowuj przykładowane dane
 
 ```bash
-sqlcmd -S localhost -d sakila -E -i sql-server-sakila-insert-data.sql
-
+sqlcmd -S (localdb)\MSSQLLocalDB -d sakila -E -i sql-server-sakila-insert-data.sql
 ```
 
 ## Podstawy
