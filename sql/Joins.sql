@@ -140,3 +140,99 @@ INNER JOIN actor AS a ON a.actor_id = fa.actor_id
 WHERE CONCAT(a.first_name, ' ', a.last_name) COLLATE Polish_CI_AS = 'Cameron Streep'
 ORDER BY f.title
 
+ -- Zadanie 5: Wyœwietl tytu³y filmów i iloœæ dostêpnych sztuk w poszczególnych wypo¿yczalniach
+ -- | film_id | film_title | store_city | inventory_stack |
+
+SELECT 
+	f.film_id,
+	f.title AS film_title, 
+	c.city as store_city, 	
+	count(*) as inventory_stack
+FROM inventory as i	
+	join film as f on i.film_id = f.film_id
+	join store as s on i.store_id= s.store_id
+	join address as a on s.address_id =a.address_id
+	join city as c on a.city_id = c.city_id
+GROUP BY  f.film_id, f.title, c.city,s.store_id
+
+
+-- Zadanie 6: Oblicz ile filmów zosta³o wypo¿yczonych w poszczególnych kategoriach.
+-- | category_id | category_name | rented_films_count |
+
+select c.category_id, c.name, 
+count(*) as counts
+from film as f
+	inner join inventory as i on f.film_id = i.film_id
+	inner join rental as r on i.inventory_id = r.inventory_id
+	inner join film_category as fc on f.film_id = fc.film_id
+	inner join category as c on fc.category_id = c.category_id
+	group by c.category_id, c.name
+order by counts desc
+
+-- Zadanie 7: ZnajdŸ film, który jest najczeœciej wypo¿yczany
+select 
+	top 100
+	f.title,
+	count(*) as counts
+from film as f
+	join inventory as i on f.film_id = i.film_id
+	join rental as r on i.inventory_id = r.inventory_id
+group by f.title
+ order by counts desc
+
+
+--- z³¹czenia zewnêtrzne
+
+
+
+
+
+SELECT DISTINCT customer_id FROM rental
+
+INSERT INTO customer (store_id, first_name, last_name, email, address_id, active)
+	VALUES (1, 'JOHN', 'SMITH', 'JOHN.SMITH@sakilacustomer.org', 5, 1)
+
+SELECT * FROM customer 
+SELECT COUNT(*) FROM customer 
+
+-- lewe z³¹czenie zewnêtrzne
+
+-- Wyœwietl iloœæ wypo¿yczeñ dla ka¿dego klienta w³¹cznie z 0 wypo¿yczeñ
+SELECT 
+	customer.customer_id,
+	customer.first_name,
+	customer.last_name,
+	COUNT(rental_id) AS rental_quantity
+FROM customer 
+	LEFT OUTER JOIN rental
+		ON customer.customer_id = rental.customer_id
+GROUP BY
+	customer.customer_id,
+	customer.first_name,
+	customer.last_name
+
+SELECT 
+	customer.customer_id,
+	customer.first_name,
+	customer.last_name,
+	rental.rental_id,
+	rental.rental_date,
+	rental.return_date
+FROM customer 
+	LEFT OUTER JOIN rental
+		ON customer.customer_id = rental.customer_id
+ORDER BY customer_id
+
+
+INSERT INTO country (country)
+	VALUES ('Eskobar')
+
+
+SELECT * FROM city
+	RIGHT OUTER JOIN country
+		ON city.country_id = country.country_id
+
+SELECT * FROM country
+	LEFT OUTER JOIN city
+		ON country.country_id = city.country_id	
+
