@@ -44,4 +44,33 @@ FROM (
 		ON c.customer_id = r.rental_id
 
 	
+SELECT 
+	title, 
+	c.[name] AS category_name
+FROM film AS f
+	INNER JOIN film_category  AS fc
+		ON fc.film_id = f.film_id
+	INNER JOIN category AS c
+		ON c.category_id = fc.category_id
+WHERE
+	c.[name] IN ('Documentary', 'Horror')
 
+-- Pobierz listê wypo¿yczeñ klientów tylko z Polski
+SELECT * FROM rental
+	WHERE customer_id IN (
+		SELECT c.customer_id FROM customer AS c
+		INNER JOIN address AS a
+			ON c.address_id = a.address_id
+		INNER JOIN city AS ct
+			ON ct.city_id = a.city_id
+		INNER JOIN country AS ctr
+			ON ct.country_id = ctr.country_id
+		WHERE ctr.country = 'Poland')
+
+
+
+
+		
+
+		
+SELECT distinct city FROM city
