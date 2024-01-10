@@ -127,6 +127,23 @@ namespace SakilaConsoleApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT TOP(3)
+        ///    DATENAME(WEEKDAY, rental_date) AS rental_day,
+        ///    COUNT(*) AS rental_count
+        ///FROM 
+        ///    rental
+        ///GROUP BY
+        ///    DATENAME(WEEKDAY, rental_date)
+        ///ORDER BY
+        ///    rental_count DESC.
+        /// </summary>
+        internal static string GetTotalRentalsByWeekday {
+            get {
+                return ResourceManager.GetString("GetTotalRentalsByWeekday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE actor 
         ///WHERE
         ///	actor_id = @id.

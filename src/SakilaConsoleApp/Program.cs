@@ -5,6 +5,8 @@ using SakilaConsoleApp.Properties;
 
 Console.WriteLine("Hello, Sakila!");
 
+GetTotalsRentalsByWeekday();
+
 // GetAllCustomers();
 
 // GetFilmById();
@@ -250,6 +252,47 @@ static void RemoveActor()
     catch (SqlException e)
     {
         Console.WriteLine(e.ErrorCode);
+    }
+    finally
+    {
+        connection.Close();
+    }
+}
+
+static void GetTotalsRentalsByWeekday()
+{
+    string connectString = "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=sakila; Integrated Security=True; Encrypt=False; Trust Server Certificate=False;";
+
+    SqlConnection connection = new SqlConnection(connectString);
+
+    try
+    {
+        connection.Open();
+
+        SqlCommand command = new SqlCommand(Resources.GetTotalRentalsByWeekday, connection);
+
+        List<TotalRentalsByWeekday> totals = new List<TotalRentalsByWeekday>();  // Zmieniona nazwa listy
+
+        using (SqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                int rentalCount = reader.GetInt32(reader.GetOrdinal("rental_count"));
+                string dayOfWeek = reader.GetString(reader.GetOrdinal("rental_day"));
+
+                TotalRentalsByWeekday rentals = new TotalRentalsByWeekday(rentalCount, dayOfWeek);
+                totals.Add(rentals);
+            }
+        }
+
+        foreach (TotalRentalsByWeekday film in totals)  // Zmieniona nazwa listy
+        {
+            Console.WriteLine(film);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Wystąpił błąd: {ex.Message}");
     }
     finally
     {

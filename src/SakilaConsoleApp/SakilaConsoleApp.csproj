@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Resources\Film\" />
     <Folder Include="Resources\Actor\" />
+    <Folder Include="Resources\Rental\" />
   </ItemGroup>
 
 </Project>
