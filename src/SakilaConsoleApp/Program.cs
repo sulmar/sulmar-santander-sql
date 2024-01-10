@@ -9,44 +9,7 @@ Console.WriteLine("Hello, Sakila!");
 
 // GetFilmById();
 
-// TODO: wyszukiwanie filmów na podstawie tytułu
-
-string selectedTitle = "AC%";
-
-string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
-
-SqlConnection connection = new SqlConnection(connectionString);
-
-connection.Open();
-
-SqlCommand command = new SqlCommand(Resources.GetFilmsByTitle, connection);
-command.Parameters.AddWithValue("@title", selectedTitle);
-
-List<Film> films = new List<Film>();
-
-SqlDataReader reader = command.ExecuteReader();
-{
-    if (reader.HasRows)
-    {
-        while (reader.Read())
-        {
-            // Mapowanie   
-            Film film = FilmMapper.Map(reader);
-
-            films.Add(film);
-        }
-    }
-}
-
-
-
-connection.Close();
-
-foreach(Film film in films)
-{
-    Console.WriteLine(film);
-}
-
+GetFilmsByTitle();
 
 static void GetAllCustomers()
 {
@@ -145,4 +108,43 @@ static void GetFilmById()
     connection.Close();
 
     Console.WriteLine(film);
+}
+
+static void GetFilmsByTitle()
+{
+    string selectedTitle = "AC%";
+
+    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+
+    SqlConnection connection = new SqlConnection(connectionString);
+
+    connection.Open();
+
+    SqlCommand command = new SqlCommand(Resources.GetFilmsByTitle, connection);
+    command.Parameters.AddWithValue("@title", selectedTitle);
+
+    List<Film> films = new List<Film>();
+
+    SqlDataReader reader = command.ExecuteReader();
+    {
+        if (reader.HasRows)
+        {
+            while (reader.Read())
+            {
+                // Mapowanie   
+                Film film = FilmMapper.Map(reader);
+
+                films.Add(film);
+            }
+        }
+    }
+
+
+
+    connection.Close();
+
+    foreach (Film film in films)
+    {
+        Console.WriteLine(film);
+    }
 }
