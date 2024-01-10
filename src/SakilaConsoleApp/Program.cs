@@ -19,6 +19,14 @@ foreach (var film in films)
     Console.WriteLine(film);
 }
 
+ICustomerRepository customerRepository = new DbCustomerRepository(connection);
+var customers = customerRepository.GetCustomersAll();
+
+foreach (var customer in customers)
+{
+    Console.WriteLine(customer);
+}
+
 
 // GetTotalsRentalsByWeekday();
 

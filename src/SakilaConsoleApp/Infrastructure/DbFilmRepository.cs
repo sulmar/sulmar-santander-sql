@@ -6,9 +6,10 @@ using SakilaConsoleApp.Properties;
 
 namespace SakilaConsoleApp.Infrastructure
 {
+
     public class DbFilmRepository : IFilmRepository
     {
-        private SqlConnection connection;
+        private readonly SqlConnection connection;
 
         public DbFilmRepository(SqlConnection connection)
         {
