@@ -61,6 +61,18 @@ namespace SakilaConsoleApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO actor (first_name, last_name) 
+        ///	VALUES (@firstname, @lastname);
+        ///
+        ///SELECT SCOPE_IDENTITY();.
+        /// </summary>
+        internal static string AddActor {
+            get {
+                return ResourceManager.GetString("AddActor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT customer_id, first_name, last_name FROM customer.
         /// </summary>
         internal static string GetAllCustomers {
@@ -111,6 +123,31 @@ namespace SakilaConsoleApp.Properties {
         internal static string GetFilmsByTitle {
             get {
                 return ResourceManager.GetString("GetFilmsByTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE actor 
+        ///WHERE
+        ///	actor_id = @id.
+        /// </summary>
+        internal static string RemoveActor {
+            get {
+                return ResourceManager.GetString("RemoveActor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE actor 
+        /// SET 
+        ///	first_name = @firstname,
+        ///	last_name  = @lastname
+        ///WHERE
+        ///	actor_id = @id.
+        /// </summary>
+        internal static string UpdateActor {
+            get {
+                return ResourceManager.GetString("UpdateActor", resourceCulture);
             }
         }
     }

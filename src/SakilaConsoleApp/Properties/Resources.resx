@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AddActor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Actor\AddActor.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
   <data name="GetAllCustomers" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GetAllCustomers.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
@@ -129,5 +132,11 @@
   </data>
   <data name="GetFilmsByTitle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Film\GetFilmsByTitle.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="RemoveActor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Actor\RemoveActor.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="UpdateActor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Actor\UpdateActor.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
 </root>

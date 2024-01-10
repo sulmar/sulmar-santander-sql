@@ -9,7 +9,13 @@ Console.WriteLine("Hello, Sakila!");
 
 // GetFilmById();
 
-GetFilmsByTitle();
+// GetFilmsByTitle();
+
+// AddActor();
+
+// UpdateActor();
+
+// RemoveActor();
 
 static void GetAllCustomers()
 {
@@ -146,5 +152,107 @@ static void GetFilmsByTitle()
     foreach (Film film in films)
     {
         Console.WriteLine(film);
+    }
+}
+
+static void AddActor()
+{
+    Actor actor = new Actor();
+    actor.FirstName = "Bruce";
+    actor.LastName = "Willis";
+
+    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+
+    SqlConnection connection = new SqlConnection(connectionString);
+
+    SqlCommand command = new SqlCommand(Resources.AddActor, connection);
+
+    command.Parameters.AddWithValue("@firstname", actor.FirstName);
+    command.Parameters.AddWithValue("@lastname", actor.LastName);
+
+    try
+    {
+        connection.Open();
+
+        // int rowsAffected = command.ExecuteNonQuery();
+        // Console.WriteLine($"{rowsAffected} rows affected.");
+
+        int id = Convert.ToInt32(command.ExecuteScalar());
+        actor.Id = id;
+
+        Console.WriteLine(actor);
+    }
+    catch (SqlException e)
+    {
+        Console.WriteLine(e.ErrorCode);
+    }
+    finally
+    {
+        connection.Close();
+    }
+}
+
+static void UpdateActor()
+{
+    Actor actor = new Actor();
+    actor.Id = 201;
+    actor.FirstName = "Bruce";
+    actor.LastName = "Lee";
+
+    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+
+    SqlConnection connection = new SqlConnection(connectionString);
+
+    SqlCommand command = new SqlCommand(Resources.UpdateActor, connection);
+    command.Parameters.AddWithValue("@id", actor.Id);
+    command.Parameters.AddWithValue("@firstname", actor.FirstName);
+    command.Parameters.AddWithValue("@lastname", actor.LastName);
+
+    try
+    {
+        connection.Open();
+
+        int rowsAffected = command.ExecuteNonQuery();
+        Console.WriteLine($"{rowsAffected} rows affected.");
+
+        Console.WriteLine(actor);
+    }
+    catch (SqlException e)
+    {
+        Console.WriteLine(e.ErrorCode);
+    }
+    finally
+    {
+        connection.Close();
+    }
+}
+
+static void RemoveActor()
+{
+    Actor actor = new Actor();
+    actor.Id = 201;
+
+    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+
+    SqlConnection connection = new SqlConnection(connectionString);
+
+    SqlCommand command = new SqlCommand(Resources.RemoveActor, connection);
+
+    command.Parameters.AddWithValue("@id", actor.Id);
+
+    try
+    {
+        connection.Open();
+
+        int rowsAffected = command.ExecuteNonQuery();
+        Console.WriteLine($"{rowsAffected} rows affected.");
+    }
+    catch (SqlException e)
+    {
+        Console.WriteLine(e.ErrorCode);
+    }
+    finally
+    {
+        connection.Close();
     }
 }
