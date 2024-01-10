@@ -1,11 +1,26 @@
 ﻿using Microsoft.Data.SqlClient;
+using SakilaConsoleApp.Abstractions;
+using SakilaConsoleApp.Infrastructure;
 using SakilaConsoleApp.Mappers;
 using SakilaConsoleApp.Model;
 using SakilaConsoleApp.Properties;
 
 Console.WriteLine("Hello, Sakila!");
 
-GetTotalsRentalsByWeekday();
+string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+SqlConnection connection = new SqlConnection(connectionString);
+
+IFilmRepository filmRepository = new DbFilmRepository(connection);
+
+var films = filmRepository.GetFilmsAll();
+
+foreach (var film in films)
+{
+    Console.WriteLine(film);
+}
+
+
+// GetTotalsRentalsByWeekday();
 
 // GetAllCustomers();
 
