@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using SakilaConsoleApp.Abstractions;
 using SakilaConsoleApp.Infrastructure;
 using SakilaConsoleApp.Mappers;
@@ -7,7 +8,45 @@ using SakilaConsoleApp.Properties;
 
 Console.WriteLine("Hello, Sakila!");
 
-string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+// Odczytywanie konfiguracji z pliku
+// dotnet add package Microsoft.Extensions.Configuration
+// dotnet add package Microsoft.Extensions.Configuration.Json
+
+var settings = new Dictionary<string, string>
+{
+    ["ConnectionStrings:SakilaConnection"] = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakilaXXX;Integrated Security=True",
+    ["Foo"] = "Bar",
+};
+
+string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false)
+    .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
+    .AddCommandLine(args)   // dotnet run -foo Bar
+    // .AddInMemoryCollection(settings)   
+    .Build();
+
+// string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+
+string foo = configuration["Foo"];
+
+Console.WriteLine(foo);
+
+string connectionString = configuration.GetConnectionString("SakilaConnection");
+Console.WriteLine($"Connection: {connectionString}");
+
+// Tworzenie ConnectionString za pomocą budowniczego
+//SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
+//sqlConnectionStringBuilder.DataSource = "(localdb)\\MSSQLLocalDB";
+//sqlConnectionStringBuilder.InitialCatalog = "Sakila";
+//sqlConnectionStringBuilder.Encrypt = false;
+//sqlConnectionStringBuilder.IntegratedSecurity = true;
+
+//connectionString = sqlConnectionStringBuilder.ToString();
+
+
 SqlConnection connection = new SqlConnection(connectionString);
 
 IFilmRepository filmRepository = new DbFilmRepository(connection);
