@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using SakilaConsoleApp.Mappers;
 using SakilaConsoleApp.Model;
 using SakilaConsoleApp.Properties;
 
@@ -6,51 +7,45 @@ Console.WriteLine("Hello, Sakila!");
 
 // GetAllCustomers();
 
-// dotnet add package Microsoft.Data.SqlClient
+// GetFilmById();
 
-// Parametry połączenia do bazy danych
+// TODO: wyszukiwanie filmów na podstawie tytułu
+
+string selectedTitle = "AC%";
+
 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
 
-// Tworzymy połączenie do bazy danych
 SqlConnection connection = new SqlConnection(connectionString);
 
-int selectedFilmId = 10;
-
-// Otwieramy połączenie do bazy danych
 connection.Open();
 
-// Tworzymy polecenie SQL
-SqlCommand command = new SqlCommand(Resources.GetFilmById, connection);
+SqlCommand command = new SqlCommand(Resources.GetFilmsByTitle, connection);
+command.Parameters.AddWithValue("@title", selectedTitle);
 
-// Przekazanie parametru do zapytania
-command.Parameters.AddWithValue("@film_id", selectedFilmId);
-
-Film film = new Film();
+List<Film> films = new List<Film>();
 
 SqlDataReader reader = command.ExecuteReader();
 {
     if (reader.HasRows)
     {
-        reader.Read();
+        while (reader.Read())
+        {
+            // Mapowanie   
+            Film film = FilmMapper.Map(reader);
 
-        int filmId = reader.GetInt32(reader.GetOrdinal("film_id"));
-        string title = reader.GetString(reader.GetOrdinal("title"));
-        string description = reader.GetString(reader.GetOrdinal("description"));
-
-        // Mapowanie       
-        film.Id = filmId;
-        film.Title = title;
-        film.Description = description;
+            films.Add(film);
+        }
     }
 }
 
+
+
 connection.Close();
 
-Console.WriteLine($"{film.Id} {film.Title} {film.Description}");
-
-
-
-
+foreach(Film film in films)
+{
+    Console.WriteLine(film);
+}
 
 
 static void GetAllCustomers()
@@ -112,4 +107,42 @@ static void GetAllCustomers()
     {
         Console.WriteLine(customer.ToString());
     }
+}
+
+static void GetFilmById()
+{
+    // dotnet add package Microsoft.Data.SqlClient
+
+    // Parametry połączenia do bazy danych
+    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=sakila;Integrated Security=True";
+
+    // Tworzymy połączenie do bazy danych
+    SqlConnection connection = new SqlConnection(connectionString);
+
+    int selectedFilmId = 10;
+
+    // Otwieramy połączenie do bazy danych
+    connection.Open();
+
+    // Tworzymy polecenie SQL
+    SqlCommand command = new SqlCommand(Resources.GetFilmById, connection);
+
+    // Przekazanie parametru do zapytania
+    command.Parameters.AddWithValue("@film_id", selectedFilmId);
+
+    Film film = new Film();
+
+    SqlDataReader reader = command.ExecuteReader();
+    {
+        if (reader.HasRows)
+        {
+            reader.Read();
+
+            film = FilmMapper.Map(reader);
+        }
+    }
+
+    connection.Close();
+
+    Console.WriteLine(film);
 }

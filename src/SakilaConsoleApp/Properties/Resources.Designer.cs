@@ -70,10 +70,12 @@ namespace SakilaConsoleApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT 
+        ///   Looks up a localized string similar to -- DECLARE @film_id INT = 1
+        ///
+        ///SELECT 
         ///	film_id, 
         ///	title, 
-        ///	[description] 
+        ///	[description]
         ///FROM 
         ///	film 
         ///WHERE 
@@ -98,6 +100,17 @@ namespace SakilaConsoleApp.Properties {
         internal static string GetFilmsByRating {
             get {
                 return ResourceManager.GetString("GetFilmsByRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -- DECLARE @title VARCHAR(255) = &apos;AC%&apos;
+        ///
+        ///SELECT film_id, title, [description] FROM film WHERE title LIKE @title .
+        /// </summary>
+        internal static string GetFilmsByTitle {
+            get {
+                return ResourceManager.GetString("GetFilmsByTitle", resourceCulture);
             }
         }
     }
