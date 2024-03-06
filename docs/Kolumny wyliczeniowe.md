@@ -1,4 +1,4 @@
-# Operacje liczbowe
+# Operacje arytmetyczne
 
 - mnożenie 
 ~~~ sql
